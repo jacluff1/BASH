@@ -4,10 +4,6 @@ sudo apt-get install essential-build
 printf "\ngetting various packages (curl,?)...\n"
 sudo apt install curl
 
-# make directories
-# printf "\nmaking directory $HOME/PythonFiles...\n"
-# mkdir $HOME/PythonFiles
-
 # export BASH directory to .bashrc
 export PATH="$PWD:$PATH"
 
@@ -17,17 +13,17 @@ for f in $PWD/*.sh; do
 	chmod 755 $f
 done
 
-# install python (Linux 18.04 only comes with python3 native)
-./install_python.sh
+# set up virtual envrionments in directory $HOME/PythonFiles
+./python_virtual_environments.sh
 
-# install pip
-./install_pip.sh
+# install python (Linux 18.04 only comes with python3 native)
+# ./install_python.sh
+
+# # install pip
+# ./install_pip.sh
 
 # install jupyter
-./install_jupyter.sh
-
-# install/update library packages
-./updatePythonLibs.sh
+# ./install_jupyter.sh
 
 # set autoreload for ipython
 ./python_autoreload.sh
@@ -43,3 +39,6 @@ done
 
 # install git
 ./install_git.sh
+
+# make adjustments to .bashrc
+./update_bashrc.sh
