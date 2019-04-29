@@ -1,4 +1,4 @@
-declare -a packages="ipython numpy pandas scipy matplotlib sklearn tensorflow requests torch torchvision keras"
+declare -a packages="ipython numpy pandas scipy matplotlib sklearn tensorflow requests torch torchvision keras scikit-image"
 
 # navigate to PythonFiles
 cd $HOME/PythonFiles
