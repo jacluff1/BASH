@@ -8,14 +8,15 @@ printf "\nfound scripts:\n${scripts[@]}\n\n"
 for xx in ${scripts[@]}; do
     # skip current file
     if [[ "give_permissions" == *"$xx"* ]]; then continue; fi
+    # skip files in env folder
+    if [[ "djakToolbox" == *"$xx"* ]]; then continue; fi
+    # add permissions via chmod
+    chmod 755 $xx
+    printf "\nadded 755 permissions to $xx via chmod\n";
     # if script is in git repo
     if [ -f .git/config ]; then
         # add permissions via git
-        git update-index --chmod=+x $xx
+        git update-index --add --chmod=+x $xx
         printf "added permissions to $xx via git\n";
-    else
-        # otherwise add permissions via chmod
-        chmod 755 $script
-        printf "added permissions to $xx via chmod\n";
     fi
 done

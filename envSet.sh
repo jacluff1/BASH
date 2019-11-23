@@ -9,7 +9,7 @@ else
 fi
 
 # save current work directy as home, this script should be run from project root directory
-home=$PWD
+home=$(pwd)
 
 # if there is no python virtual environment set up, set it up
 if [ ! -d "$home/$envName" ]; then
