@@ -17,7 +17,7 @@ UP_TO_DATE () {
 UNTRACKED_FILES () {
     x=$(git status)
     if [[ "${x[@]^^}" =~ "UNTRACKED FILES" ]]; then
-        printf "WARNING:\tUNTRACKED FILES!!!\nterminating\n"
+        printf "\nWARNING:\tUNTRACKED FILES!!!\nterminating\n"
         exit 1;
     else
         echo $1
@@ -25,7 +25,7 @@ UNTRACKED_FILES () {
 }
 
 if [ ${#@} == 0 ]; then
-    message="Getting ready to up update with master IOR remote and push changes";
+    message="\nGetting ready to up update with master IOR remote and push changes";
 else
     message="$1";
 fi
@@ -40,6 +40,7 @@ UNTRACKED_FILES
 branch=$(git symbolic-ref --short HEAD)
 # if not on the master branch, make sure and pull from master first
 if ! [ $branch == master ]; then
+    printf "\nINITIATING MERGE WITH MASTER...\n"
     git checkout master
     git pull
     git checkout $branch
@@ -49,17 +50,21 @@ if ! [ $branch == master ]; then
         printf "WARNING:\tMERGE CONFLICTS WITH MASTER; RESOLVE BEFORE CONTINUTING!!!\nterminating\n"
         exit 2;
     fi;
+else
+    printf "\nALREADY ON MASTER BRANCH\n"
 fi
 
 # if local not up-to-date, update with remote first
 if [ $(UP_TO_DATE) == False ]; then
-    printf "CHECK:\tNOT UP TO DATE; PULLING FROM REMOTE...\n"
+    printf "\nNOT UP TO DATE WITH REMOTE; PULLING FROM REMOTE...\n"
     x=$(git pull)
     # if there are merge conflicts, terminate with message
     if [[ "${x[@]^^}" =~ "CONFLICT" ]]; then
         printf "WARNING:\tMERGE CONFLICTS WITH REMOTE; RESOLVE BEFORE CONTINUING!!!\nterminating\n"
         exit 3;
     fi;
+else
+    printf "\nUP TO DATE WITH REMOTE\n"
 fi
 
 # after making sure local is up-to-date; push changes
