@@ -22,7 +22,7 @@ if [ ! -d "$home/$envName" ]; then
 fi
 
 # if there is an active virtual environment, deactivate it
-if [ $(python -c 'import sys; print (1 if hasattr(sys, "real_prefix") else 0)') == 0 ]; then deactivate; fi
+if [ $(python -c 'import sys; print (1 if hasattr(sys, "real_prefix") else 0)') == 1 ]; then deactivate; fi
 
 # activate virtual environment
 source ./"$envName"/bin/activate

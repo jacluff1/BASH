@@ -1,8 +1,5 @@
 # NOTE: this script is to check repo status and update if necessary. This script is particularly repos cloned using SSH urls
 
-# TODO: make sure that there is 1 argument provided, its ithe commit message
-message=$1
-
 # function to check up to date status
 UP_TO_DATE () {
     status=$(git status)
@@ -24,11 +21,16 @@ UNTRACKED_FILES () {
     fi
 }
 
+# get package name
+pkgDIR=$(pwd)
+
 # look to see if an update is necessary at all
 x=$(git status)
 if [[ "${x[@]^^}" =~ "UP TO DATE" ]] && [[ "${x[@]^^}" =~ "NOTHING TO COMMIT" ]]; then
-    printf "\nUPDATE NOT REQUIRED\n"
+    printf "\nUPDATE NOT REQUIRED:\t$pkgDIR\n"
     exit 4;
+else
+    printf "\nUPDATE REQUIRED:\t$pkgDIR\n"
 fi
 
 # look for input commit message; if none provided, make one up
