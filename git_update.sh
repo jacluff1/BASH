@@ -24,6 +24,14 @@ UNTRACKED_FILES () {
     fi
 }
 
+# look to see if an update is necessary at all
+x=$(git status)
+if [[ "${x[@]^^}" =~ "UP TO DATE" ]] && [[ "${x[@]^^}" =~ "NOTHING TO COMMIT" ]]; then
+    printf "\nUPDATE NOT REQUIRED\n"
+    exit 4;
+fi
+
+# look for input commit message; if none provided, make one up
 if [ ${#@} == 0 ]; then
     message="\nGetting ready to up update with master IOR remote and push changes";
 else
